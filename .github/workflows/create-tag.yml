@@ -17,7 +17,7 @@ jobs:
       - name: Get latest tag
         run: |
              chmod +x $(pwd)/latest_tag.sh 
-             source /bin/bash $(pwd)/latest_tag.sh
+             source $(pwd)/latest_tag.sh
              export $updated_version_tag > $GITHUB_ENV
 
       - name: Create tag
