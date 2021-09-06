@@ -16,11 +16,11 @@ jobs:
                    
       - name: Get latest tag
         run: |
-             chmod +x $(pwd)/latest_tag.sh > latest_tag.sh
-             /bin/bash $(pwd)/latest_tag.sh
-             echo "updated_version=$updated_version_tag" > $GITHUB_ENV
+             chmod +x $(pwd)/version_verify.sh
+             /bin/bash $(pwd)/version_verify.sh > updated_version_tag
+             echo "updated_version=$(cat $(pwd)/updated_version_tag)" > $GITHUB_ENV
 
-      - name: Latest tag
+      - name: Create tag
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
