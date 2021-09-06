@@ -5,6 +5,7 @@ if [ -z "$previous_version_tag" ]
 then
       updated_version_tag="$new_version_tag"
       echo "$updated_version_tag"
+      exit 0
 fi
 
 previous_version_tag=$(echo $previous_version_tag | cut -d 'v' -f2)
