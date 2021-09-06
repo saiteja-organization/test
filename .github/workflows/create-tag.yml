@@ -25,5 +25,4 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: v${{ env.updated_version }}
-          release: v${{ env.updated_version }}
           
