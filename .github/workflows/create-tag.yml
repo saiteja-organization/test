@@ -16,8 +16,8 @@ jobs:
                    
       - name: Get latest tag
         run: |
-             chmod +x $(pwd)/version_verify.sh
-             /bin/bash $(pwd)/version_verify.sh > updated_version_tag
+             chmod +x $(pwd)/latest_tag.sh
+             /bin/bash $(pwd)/latest_tag.sh > updated_version_tag
              echo "updated_version=$(cat $(pwd)/updated_version_tag)" > $GITHUB_ENV
 
       - name: Release with latest tag
