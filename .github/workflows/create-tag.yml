@@ -23,7 +23,6 @@ jobs:
       - name: Release with latest tag
         uses: tvdias/github-tagger@v0.0.1
         with:
-          fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           tag: v${{ env.updated_version }}
           
