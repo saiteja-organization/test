@@ -18,7 +18,7 @@ jobs:
         run: |
              chmod +x $(pwd)/latest_tag.sh 
              source $(pwd)/latest_tag.sh
-             export $updated_version_tag > $GITHUB_ENV
+             export "$updated_version_tag" > $GITHUB_ENV
 
       - name: Create tag
         uses: tvdias/github-tagger@v0.0.1
