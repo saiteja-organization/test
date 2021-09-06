@@ -1,6 +1,19 @@
 
 new_version_tag=$(cat $(pwd)/VERSION)
+echo "$new_version_tag"
 previous_version_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+echo "$previous_version_tag"
+
+if [ -z "$previous_version_tag" ]
+then
+      updated_version_tag="$new_version_tag"
+else
+      previous_version_tag="$previous_version_tag"
+fi
+
+echo "$updated_version_tag"
+echo "$previous_version_tag"
+
 previous_version_tag=$(echo $previous_version_tag | cut -d 'v' -f2)
 
 new_version_major=$(echo $new_version_tag | cut -d '.' -f1)
@@ -45,4 +58,4 @@ else
     fi
 fi
 
-echo "$updated_version_tag" 
+echo "$updated_version_tag"
