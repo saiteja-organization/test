@@ -7,8 +7,8 @@ echo "$previous_version_tag"
 if [ -z "$previous_version_tag" ]
 then
       updated_version_tag="$new_version_tag"
-else
-      previous_version_tag="$previous_version_tag"
+      echo "$updated_version_tag"
+      exit 0
 fi
 
 echo "$updated_version_tag"
