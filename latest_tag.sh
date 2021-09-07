@@ -1,6 +1,5 @@
 
 new_version_tag=$(cat $(pwd)/VERSION)
-echo "$new_version_tag"
 previous_version_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
 
 if [ -z "$previous_version_tag" ]
