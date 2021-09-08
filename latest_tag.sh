@@ -43,9 +43,9 @@ function main() {
 
     get_version_tag
 
-    version_tag_init $new_tag $recent_tagg
+    version_tag_init $new_tag $recent_tag
 
-    result_version_tag=$(get_latest_tag $new_tag $recent_tagg)
+    result_version_tag=$(get_latest_tag $new_tag $recent_tag)
 
     echo $result_version_tag
 }
