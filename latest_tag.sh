@@ -48,5 +48,6 @@ function main() {
     result_version_tag=$(get_latest_tag $new_tag $recent_tag)
 
     echo $result_version_tag
+}
     
 main
