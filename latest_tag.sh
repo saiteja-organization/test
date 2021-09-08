@@ -2,6 +2,8 @@ new_tag=""
 
 recent_tag=""
 
+result_version_tag=""
+
 function get_version_tag() {    
     new_tag=$(cat $(pwd)/VERSION)
     recent_tag=$(git describe --tags $(git rev-list --tags --max-count=1) | cut -d 'v' -f2)
@@ -31,8 +33,8 @@ function get_latest_tag() {
 function version_tag_init() {
     if [ -z "$2" ]
     then
-          new_tag="$1"
-          echo "$new_tag"
+          result_version_tag="$1"
+          echo "$result_version_tag"
           exit 0
     fi
 }
@@ -43,9 +45,9 @@ function main() {
 
     version_tag_init $new_tag $recent_tagg
 
-    new_tag=$(get_latest_tag $new_tag $recent_tagg)
+    result_version_tag=$(get_latest_tag $new_tag $recent_tagg)
 
-    echo $new_tag
+    echo $result_version_tag
 }
     
 main
