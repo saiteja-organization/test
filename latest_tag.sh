@@ -16,12 +16,13 @@ result_version_tag=""
 ####################################
 
 # version values assignment
-function get_version_tags()    
+function get_version_tags() {    
     new_version_tag=$(cat $(pwd)/VERSION)
     previous_version_tag=$(git describe --tags $(git rev-list --tags --max-count=1) | cut -d 'v' -f2)
+}
 
 # new version tag evaluation
-function get_latest_tag():
+function get_latest_tag() {
     local new_version_major=$(echo $1 | cut -d '.' -f1)
     local new_version_minor=$(echo $1 | cut -d '.' -f2)
     local new_version_patch=$(echo $1 | cut -d '.' -f3)
@@ -40,15 +41,17 @@ function get_latest_tag():
         fi
     fi
     return 0
+}
     
 # scenario with no history of release-tag
-function version_tag_init():
+function version_tag_init() {
     if [ -z "$2" ]
     then
           result_version_tag="$1"
           echo "$result_version_tag"
           exit 0
     fi
+}
 
 # main method
 function main() {
