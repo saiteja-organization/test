@@ -1,56 +1,72 @@
+####################################
+# global variables declaration
+####################################
 
-new_version_tag=$(cat $(pwd)/VERSION)
-previous_version_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+# version file value
+new_version_tag=""
 
-if [ -z "$previous_version_tag" ]
-then
-      updated_version_tag="$new_version_tag"
-      echo "$updated_version_tag"
-      exit 0
-fi
+# last release-tag version 
+previous_version_tag=""
 
-previous_version_tag=$(echo $previous_version_tag | cut -d 'v' -f2)
+# new updated version
+result_version_tag=""
 
-new_version_major=$(echo $new_version_tag | cut -d '.' -f1)
-new_version_minor=$(echo $new_version_tag | cut -d '.' -f2)
-new_version_patch=$(echo $new_version_tag | cut -d '.' -f3)
+####################################
+# member functions
+####################################
 
-previous_version_major=$(echo $previous_version_tag | cut -d '.' -f1)
-previous_version_minor=$(echo $previous_version_tag | cut -d '.' -f2)
-previous_version_patch=$(echo $previous_version_tag | cut -d '.' -f3)
+# version values assignment
+function get_version_tags()    
+    new_version_tag = $(cat $(pwd)/VERSION)
+    previous_version_tag = $(git describe --tags $(git rev-list --tags --max-count=1) | cut -d 'v' -f2)
 
-if (( "$new_version_major"<"$previous_version_major" ))
-then
-    updated_version_tag="$new_version_tag is smaller than $previous_version_tag"
-else
-    if (( "$new_version_major">"$previous_version_major" ))
+# new version tag evaluation
+function get_latest_tag():
+    local new_version_major=$(echo $1 | cut -d '.' -f1)
+    local new_version_minor=$(echo $1 | cut -d '.' -f2)
+    local new_version_patch=$(echo $1 | cut -d '.' -f3)
+    
+    local previous_version_major=$(echo $2 | cut -d '.' -f1)
+    local previous_version_minor=$(echo $2 | cut -d '.' -f2)
+    local previous_version_patch=$(echo $2 | cut -d '.' -f3)
+    
+    if (( "$new_version_major">"$previous_version_major" )) || (( "$new_version_minor">"$previous_version_minor" )) || (( "$new_version_patch">"$previous_version_patch" ))
     then
-        updated_version_tag="$new_version_tag"
+        echo "$new_version_tag"
     else
-        if (( "$new_version_major"=="$previous_version_major" ))
-        then
-            if (( "$new_version_minor"<"$previous_version_minor" ))
-            then
-                updated_version_tag="$new_version_tag is smaller than $previous_version_tag"
-            else
-                if (( "$new_version_minor">"$previous_version_minor" ))
-                then
-                    updated_version_tag="$new_version_tag"
-                else
-                    if (( "$new_version_minor"=="$previous_version_minor" ))
-                    then
-                        if (( "$new_version_patch"<="$previous_version_patch" ))
-                        then
-                            previous_version_patch=$(expr $previous_version_patch + 1)
-                            updated_version_tag="$previous_version_major.$previous_version_minor.$previous_version_patch"
-                        else
-                            updated_version_tag="$new_version_tag"
-                        fi
-                    fi
-                fi
-            fi
+        if (( "$new_version_major"=="$previous_version_major" )) && (( "$new_version_minor"=="$previous_version_minor" )) && (( "$new_version_patch"<="$previous_version_patch" ))
+        then 
+            echo "$previous_version_major.$previous_version_minor.$(expr $previous_version_patch + 1)"
         fi
     fi
-fi
+    return 0
+    
+# scenario with no history of release-tag
+function version_tag_init():
+    if [ -z "$2" ]
+    then
+          result_version_tag="$1"
+          echo "$result_version_tag"
+          exit 0
+    fi
 
-echo "$updated_version_tag"
+# main method
+function main() {
+    # reading tag values
+    get_version_tags
+
+    # handling no previous release-tag
+    version_tag_init $new_version_tag $previous_version_tag
+
+    # version tag evaluation based on previous release-tag and version file value
+    result_version_tag=$(get_latest_tag $new_version_tag $previous_version_tag)
+
+    # updated release-tag version
+    echo $result_version_tag
+}
+    
+####################################
+# script execution
+####################################
+
+main
