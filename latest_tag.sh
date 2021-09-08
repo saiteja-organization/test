@@ -17,8 +17,8 @@ result_version_tag=""
 
 # version values assignment
 function get_version_tags()    
-    new_version_tag = $(cat $(pwd)/VERSION)
-    previous_version_tag = $(git describe --tags $(git rev-list --tags --max-count=1) | cut -d 'v' -f2)
+    new_version_tag=$(cat $(pwd)/VERSION)
+    previous_version_tag=$(git describe --tags $(git rev-list --tags --max-count=1) | cut -d 'v' -f2)
 
 # new version tag evaluation
 function get_latest_tag():
