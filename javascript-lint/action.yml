@@ -1,37 +1,27 @@
 name: Check Javascript Vulnerabilities.
-description: "Check javascript vulnerabilities to frontend"
+description: "Check javascript vulnerabilities to the PR"
 
 inputs:
   working_directory: 
-    description: "Add working directory"
+    description: "A working directory passed from the caller workflow"
     required: true
   node_version:
     description: "The version of nodejs to use, defaults to `14`."
     default: "14"
     required: false
-  github_token: 
-    description: "Repo token"
-    required: true
 
 
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v1
+    - name: Install Node.js ${{ inputs.node_version }}
+      uses: actions/setup-node@v1
       with:
-        version: ${{ inputs.node_version }}
+        node-version: ${{ inputs.node_version }}
 
-    - uses: actions/checkout@v2
-    - name: install dependencies
+    - name: Check Javascript Vulnerabilities.
       working-directory: ${{ inputs.working_directory }}
       shell: bash
       run: |
-          npm install
-    - uses: oke-py/npm-audit-action@v1.8.4
-      with:
-        audit_level: moderate
-        working_directory: ${{ inputs.working_directory }}
-        issue_assignees: oke-py
-        issue_labels: vulnerability,test
-        dedupe_issues: true
+          npx audit-ci --moderate
     
