@@ -1,0 +1,26 @@
+name: Check Javascript Vulnerabilities.
+description: "Check javascript vulnerabilities to frontend"
+
+inputs:
+  working_directory: 
+    description: "Add working directory"
+    required: true
+  node_version:
+    description: "The version of nodejs to use, defaults to `14`."
+    default: "14"
+    required: false
+
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v1
+      with:
+        version: ${{ inputs.node_version }}
+
+    - name: Audit for vulnerabilities to check frontend code
+      working-directory: ${{ inputs.working_directory }}
+      shell: bash
+      run: |
+          npx audit-ci --moderate
+    
