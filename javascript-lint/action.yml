@@ -23,7 +23,10 @@ runs:
 
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: npm ci
+      working-directory: ${{ inputs.working_directory }}
+      shell: bash
+      run: |
+          npm ci
     - uses: oke-py/npm-audit-action@v1.8.4
       with:
         audit_level: moderate
