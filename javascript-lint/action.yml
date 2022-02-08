@@ -9,6 +9,9 @@ inputs:
     description: "The version of nodejs to use, defaults to `14`."
     default: "14"
     required: false
+  github_token: 
+    description: "Repo token"
+    required: true
 
 
 runs:
@@ -25,7 +28,7 @@ runs:
         with:
           audit_level: moderate
           working_directory: ${{ inputs.working_directory }}
-          github_token: ${{ secrets.REPO_TOKEN }}
+          github_token: ${{ inputs.github_token }}
           issue_assignees: oke-py
           issue_labels: vulnerability,test
           dedupe_issues: true
