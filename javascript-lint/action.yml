@@ -26,7 +26,7 @@ runs:
       working-directory: ${{ inputs.working_directory }}
       shell: bash
       run: |
-          npm ci
+          npm install
     - uses: oke-py/npm-audit-action@v1.8.4
       with:
         audit_level: moderate
