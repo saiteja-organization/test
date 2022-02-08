@@ -1,0 +1,57 @@
+name: Changed files since last successful run
+description: "Get a list of changed files since last successful run on base branch"
+
+inputs:
+  github_token:
+    description: "GitHub access token"
+    required: true
+  workflow_id:
+    description: "ID or filename of the workflow to get latest successful commit"
+    required: true
+    default: tf-fmt-check.yml
+  files_to_match:
+    description: "Check for changes using only this list of files or regex (Defaults to the entire repo)"
+    required: false
+    default: ""
+
+outputs:
+  any_changed:
+    description: Return true only when any files that match input files_to_match pattern have changed.
+    value: ${{ steps.changed-files.outputs.any_changed }}
+  changed_files:
+    description: List of all copied, modified, and added files that match input files_to_match pattern.
+    value: ${{ steps.changed-files.outputs.all_changed_files}}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Fetch branch
+      if: ${{ github.base_ref }}
+      shell: bash
+      run: git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+
+    - name: Get last successful commit on base branch
+      uses: nrwl/last-successful-commit-action@v1
+      id: last_successful_commit
+      with:
+        branch: ${{ github.base_ref || github.ref_name }}
+        workflow_id: ${{ inputs.workflow_id }}
+        github_token: ${{ inputs.github_token }}
+
+    - name: Get last common ancestor commit with base branch
+      id: common_ancestor_commit
+      if: ${{ github.base_ref }}
+      shell: bash
+      run: echo "::set-output name=commit_sha::$(git merge-base ${LAST_SUCCESSFUL_COMMIT:-origin/$GITHUB_BASE_BRANCH} $GITHUB_SHA)"
+      env:
+        LAST_SUCCESSFUL_COMMIT: ${{ steps.last_successful_commit.outputs.commit_hash }}
+        GITHUB_BASE_BRANCH: ${{ github.base_ref }}
+
+    - name: Get changed files
+      uses: tj-actions/changed-files@v12
+      id: changed-files
+      with:
+        base_sha: ${{ steps.common_ancestor_commit.outputs.commit_sha || steps.last_successful_commit.outputs.commit_hash }}
+        files: ${{ inputs.files_to_match }}
+        # Note: this flow might break if files contain spaces, then should overwrite logic using `separator`
+        # separator: ","
