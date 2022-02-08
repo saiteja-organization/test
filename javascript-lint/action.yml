@@ -22,13 +22,12 @@ runs:
         version: ${{ inputs.node_version }}
 
     - uses: actions/checkout@v2
-      - name: install dependencies
-        run: npm ci
+    - name: install dependencies
+      run: npm ci
       - uses: oke-py/npm-audit-action@v1.8.4
         with:
           audit_level: moderate
           working_directory: ${{ inputs.working_directory }}
-          github_token: ${{ inputs.github_token }}
           issue_assignees: oke-py
           issue_labels: vulnerability,test
           dedupe_issues: true
