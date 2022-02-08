@@ -24,11 +24,11 @@ runs:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: npm ci
-      - uses: oke-py/npm-audit-action@v1.8.4
-        with:
-          audit_level: moderate
-          working_directory: ${{ inputs.working_directory }}
-          issue_assignees: oke-py
-          issue_labels: vulnerability,test
-          dedupe_issues: true
+    - uses: oke-py/npm-audit-action@v1.8.4
+      with:
+        audit_level: moderate
+        working_directory: ${{ inputs.working_directory }}
+        issue_assignees: oke-py
+        issue_labels: vulnerability,test
+        dedupe_issues: true
     
