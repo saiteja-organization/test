@@ -13,7 +13,6 @@ inputs:
     default: "14"
     required: false
 
-
 runs:
   using: "composite"
   steps:
