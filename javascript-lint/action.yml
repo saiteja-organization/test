@@ -2,6 +2,9 @@ name: Check Javascript Vulnerabilities.
 description: "Check javascript vulnerabilities to the PR"
 
 inputs:
+  files:
+    description: "List of file paths to check"
+    required: true
   working_directory: 
     description: "A working directory passed from the caller workflow"
     required: true
