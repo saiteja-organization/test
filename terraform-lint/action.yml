@@ -2,9 +2,6 @@ name: Check Terraform Lint rules
 description: "Check that terraform files in the PR are respecting tflint rules"
 
 inputs:
-  config_file_path:
-    description: "Relative path to config file"
-    required: true
   files:
     description: "List of file paths to check"
     required: true
@@ -36,7 +33,7 @@ runs:
       run: |
         exit_code=0
         for file in ${{ inputs.files }}; do
-          tflint --config=${{ inputs.config_file_path }} $file || exit_code=1
+          tflint $file || exit_code=1
         done
         exit $exit_code
         
