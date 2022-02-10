@@ -1,5 +1,5 @@
-name: Check Javascript Vulnerabilities.
-description: "Check javascript vulnerabilities to the PR"
+name: Check javascript Vulnerabilities.
+description: "Check Javascript Vulnerabilities"
 
 inputs:
   working_directory: 
@@ -18,9 +18,7 @@ runs:
       with:
         node-version: ${{ inputs.node_version }}
 
-     - name: Check Javascript Vulnerabilities.
+    - name: Check javascript Vulnerabilities
+      working-directory: ${{ inputs.working_directory }}
       shell: bash
-      #working-directory: ${{ inputs.working_directory }}
-      run: |
-            cd app
-            npx audit-ci --moderate
+      run: npx audit-ci --moderate
