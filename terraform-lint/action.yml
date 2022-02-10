@@ -1,0 +1,42 @@
+name: Check Terraform Lint rules
+description: "Check that terraform files in the PR are respecting tflint rules"
+
+inputs:
+  config_file_path:
+    description: "Relative path to config file"
+    required: true
+  files:
+    description: "List of file paths to check"
+    required: true
+  os:
+    description: "The OS that's used to run action"
+    default: ubuntu-latest
+    required: false
+  tflint_version:
+    description: "The version of tflint to use, defaults to `latest`."
+    default: latest
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache@v2
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ inputs.os }}-tflint-${{ hashFiles(inputs.config_file_path) }}
+
+    - uses: terraform-linters/setup-tflint@v1
+      name: Setup TFLint
+      with:
+        tflint_version: ${{ inputs.tflint_version }}
+
+    - name: Show version
+      shell: bash
+      run: |
+        exit_code=0
+        for file in ${{ inputs.files }}; do
+          tflint --config=${{ inputs.config_file_path }} $file || exit_code=1
+        done
+        exit $exit_code
+        
