@@ -5,9 +5,9 @@ inputs:
   files:
     description: "List of file paths to check"
     required: true
-  #working_directory: 
-   # description: "A working directory passed from the caller workflow"
-   # required: true
+  working_directory: 
+    description: "A working directory passed from the caller workflow"
+    required: true
   node_version:
     description: "The version of nodejs to use, defaults to `14`."
     default: "14"
