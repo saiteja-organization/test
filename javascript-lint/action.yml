@@ -26,5 +26,9 @@ runs:
       shell: bash
       #working-directory: ${{ inputs.working_directory }}
       run: |
-          npx audit-ci --moderate
+        exit_code=0
+        for file in ${{ inputs.files }}; do
+          npx audit-ci --moderate --directory=${{ inputs.working_directory }} $file || exit_code=1
+        done
+        exit $exit_code
     
