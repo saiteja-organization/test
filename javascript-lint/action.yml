@@ -21,4 +21,4 @@ runs:
     - name: Check javascript Vulnerabilities
       working-directory: ${{ inputs.working_directory }}
       shell: bash
-      run: npx audit-ci --moderate
+      run: npx audit-ci --moderate --config audit-ci.json
