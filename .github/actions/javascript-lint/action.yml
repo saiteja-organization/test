@@ -1,15 +1,24 @@
-name: Check python Lint rules
-description: "Check that python files in the PR are respecting pylint rules"
+name: Check Javascript Vulnerabilities.
+description: "Check javascript vulnerabilities to the PR"
 
 inputs:
-  files:
-    description: "List of file paths to check"
+  working_directory: 
+    description: "A working directory passed from the caller workflow"
     required: true
+  node_version:
+    description: "The version of nodejs to use, defaults to `14`."
+    default: "14"
+    required: false
 
 runs:
   using: "composite"
   steps:
-  - name: Python Pylint Github Action
-    uses: fylein/python-pylint-github-action@master
-    with:
-        args: pylint ${{ inputs.files }}
+    - name: Install Node.js ${{ inputs.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ inputs.node_version }}
+
+     - name: Check Javascript Vulnerabilities.
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: npx audit-ci --config audit-ci.json
