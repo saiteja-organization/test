@@ -54,7 +54,7 @@ jobs:
           repository: saiteja-organization/test
           path: test
           ref: main
-          token: ${{ secrets.GH_REPO_READ_TOKEN }}
+          token: ${{ secrets.gh_repo_read_token }}
 
       - name: Get changed tf files
         id: changed-files
