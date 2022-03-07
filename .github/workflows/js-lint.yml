@@ -12,12 +12,20 @@ on:
          required: true
          type: string
          default: (^|\/)yarn\.lock$
-      config_file:
+      frontend_wd:
          required: true
          type: string
          description: "ID or filename of the workflow to get latest successful commit"
-      working_directory:
+      backend_wd:
+         required: false
+         type: string
+         description: "ID or filename of the workflow to get latest successful commit"
+      frontend_config_file:
          required: true
+         type: string
+         description: "ID or filename of the workflow to get latest successful commit"
+      backend_config_file:
+         required: false
          type: string
          description: "ID or filename of the workflow to get latest successful commit"
     secrets:
@@ -76,15 +84,15 @@ jobs:
         id: check-javascript-lint1
         uses: ./test/.github/actions/javascript-lint
         with:
-          working_directory: ${{ inputs.working_directory }}
+          working_directory: ${{ inputs.frontend_wd }}
           github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
-          config_file: ${{ inputs.config_file }}
+          config_file: ${{ inputs.frontend_config_file }}
           
       - name: Get changed tf file for frontend
         if: always()
         id: check-javascript-lint2
         uses: ./test/.github/actions/javascript-lint
         with:
-          working_directory: ${{ inputs.working_directory }}
+          working_directory: ${{ inputs.backend_wd }}
           github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
-          config_file: ${{ inputs.config_file }}
+          config_file: ${{ inputs.backend_config_file }}
