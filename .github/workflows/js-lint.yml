@@ -1,4 +1,4 @@
-name: Reusable workflow for pylint
+name: Reusable workflow for jslint
 
 on:
   workflow_call:
