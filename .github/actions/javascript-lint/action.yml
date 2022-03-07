@@ -1,0 +1,15 @@
+name: Check python Lint rules
+description: "Check that python files in the PR are respecting pylint rules"
+
+inputs:
+  files:
+    description: "List of file paths to check"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Python Pylint Github Action
+    uses: fylein/python-pylint-github-action@master
+    with:
+        args: pylint ${{ inputs.files }}
