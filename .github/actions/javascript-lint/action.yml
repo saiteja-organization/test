@@ -9,6 +9,9 @@ inputs:
     description: "The version of nodejs to use, defaults to `14`."
     default: "14"
     required: false
+  config_file:
+    description: "The version of nodejs to use, defaults to `14`."
+    required: true
 
 runs:
   using: "composite"
@@ -21,4 +24,4 @@ runs:
      - name: Check Javascript Vulnerabilities.
       shell: bash
       working-directory: ${{ inputs.working_directory }}
-      run: npx audit-ci --config audit-ci.json
+      run: npx audit-ci --config ${{ inputs.config_file }}
