@@ -66,7 +66,7 @@ jobs:
       - name: Get changed tf file for frontend
         if: always()
         id: check-javascript-lint1
-        uses: ./github-actions/.github/actions/js-lint
+        uses: ./github-actions/.github/actions/javascript-lint
         with:
           working_directory: app
           github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
       - name: Get changed tf file for frontend
         if: always()
         id: check-javascript-lint2
-        uses: ./github-actions/.github/actions/js-lint
+        uses: ./github-actions/.github/actions/javascript-lint
         with:
           working_directory: server
           github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
