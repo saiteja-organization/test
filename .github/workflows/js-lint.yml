@@ -61,7 +61,7 @@ jobs:
         uses: ./test/.github/actions/changed-files-since-last-success
         with:
           files_to_match: ${{ inputs.files_to_match }}
-          github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
+          github_token: ${{ secrets.gh_repo_read_token }}
           workflow_id: ${{ inputs.workflow_id }}
           
   audit_ci_frontend_job:
@@ -77,7 +77,7 @@ jobs:
           repository: saiteja-organization/test
           path: test
           ref: main
-          token: ${{ secrets.GH_REPO_READ_TOKEN }}       
+          token: ${{ secrets.gh_repo_read_token }}       
 
       - name: Get changed tf file for frontend
         if: always()
@@ -85,7 +85,7 @@ jobs:
         uses: ./test/.github/actions/javascript-lint
         with:
           working_directory: ${{ inputs.frontend_wd }}
-          github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
+          github_token: ${{ secrets.gh_repo_read_token }}
           config_file: ${{ inputs.frontend_config_file }}
           
       - name: Get changed tf file for frontend
@@ -94,5 +94,5 @@ jobs:
         uses: ./test/.github/actions/javascript-lint
         with:
           working_directory: ${{ inputs.backend_wd }}
-          github_token: ${{ secrets.GH_REPO_READ_TOKEN }}
+          github_token: ${{ secrets.gh_repo_read_token }}
           config_file: ${{ inputs.backend_config_file }}
