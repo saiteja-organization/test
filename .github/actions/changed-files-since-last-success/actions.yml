@@ -8,7 +8,7 @@ inputs:
   workflow_id:
     description: "ID or filename of the workflow to get latest successful commit"
     required: true
-    default: js-vulns.yml
+    default: js-lint.yml
   files_to_match:
     description: "Check for changes using only this list of files or regex (Defaults to the entire repo)"
     required: false
