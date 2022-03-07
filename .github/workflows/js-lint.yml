@@ -13,8 +13,8 @@ on:
          type: string
          default: (^|\/)yarn\.lock$
     secrets:
-      gh_token:
-         required:  true
+      #gh_token:
+         #required:  true
       gh_repo_read_token:
          required:  true
 jobs:
