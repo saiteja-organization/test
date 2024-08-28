@@ -1,0 +1,18 @@
+name: call advisor action
+on: 
+ push:
+  branches: main
+ 
+jobs:         
+  call-advisor:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    # - name: Define Files
+    #   id: files
+    #   run: echo "files=$(echo '["test-actions.yaml","go-releas.yaml"]')" >> $GITHUB_ENV
+    - name: run composite workflow
+      uses: ./test/.github/actions/advisor
+      with: 
+        files:  "js-lint.yml"
+      #  github-token: ${{ GITHUB_TOKEN }}
