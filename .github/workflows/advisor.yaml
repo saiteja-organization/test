@@ -14,7 +14,7 @@ jobs:
     #   id: files
     #   run: echo "files=$(echo '["test-actions.yaml","go-releas.yaml"]')" >> $GITHUB_ENV
     - name: run composite workflow
-      uses: ./test/.github/actions/advisor
+      uses: saiteja-organization/test/.github/actions/advisor@main
       with: 
         files:  "js-lint.yml"
       #  github-token: ${{ GITHUB_TOKEN }}
